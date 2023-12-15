@@ -30,6 +30,8 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
   const [tags, setTags] = useState<string>("")
   const [prompt, setPrompt] = useState<string>("")
   const [namespace, setNamespace] = useState<string>("")
+  const [subject, setSubject] = useState<string>("")
+  const [grade, setGrade] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
       toast.warning("Welcome message must be at least 3 characters long.")
     } else {
       setActiveTab("data")
+      window.scrollTo(0, 0)
     }
   }
 
@@ -65,6 +68,10 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
       toast.warning("Please enter a welcome message for your chatbot.")
     } else if (welcomeMessage.length < 3) {
       toast.warning("Welcome message must be at least 3 characters long.")
+    } else if (!subject) {
+      toast.warning("Please select a subject.")
+    } else if (!grade) {
+      toast.warning("please select a grade.")
     } else if (!prompt && !namespace) {
       console.log(prompt, namespace)
       toast.error(
@@ -83,6 +90,8 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
           indexName: indexName,
           tags: tags,
           prompt: prompt,
+          subject: subject,
+          grade: grade,
           creator: session?.user?.email!,
           createdAt: serverTimestamp(),
         })
@@ -96,6 +105,8 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
         setIndexName("")
         setTags("")
         setPrompt("")
+        setSubject("")
+        setGrade("")
         setActiveTab("properties")
         window.scrollTo(0, 0)
       } catch (error) {
@@ -144,10 +155,20 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
                       setTags={setTags}
                     />
                     <div className="my-5 flex justify-center gap-4">
-                      <Button onClick={() => setActiveTab("properties")}>
+                      <Button
+                        onClick={() => {
+                          setActiveTab("properties")
+                          window.scrollTo(0, 0)
+                        }}
+                      >
                         Back
                       </Button>
-                      <Button onClick={() => setActiveTab("model")}>
+                      <Button
+                        onClick={() => {
+                          setActiveTab("model")
+                          window.scrollTo(0, 0)
+                        }}
+                      >
                         Next
                       </Button>
                     </div>
@@ -159,11 +180,20 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
                       prompt={prompt}
                       setPrompt={setPrompt}
                       indexName={indexName}
+                      subject={subject}
+                      setSubject={setSubject}
+                      grade={grade}
+                      setGrade={setGrade}
                     />
                     <div className="my-5 flex justify-center">
                       {!loading ? (
                         <div className="flex gap-4">
-                          <Button onClick={() => setActiveTab("data")}>
+                          <Button
+                            onClick={() => {
+                              setActiveTab("data")
+                              window.scrollTo(0, 0)
+                            }}
+                          >
                             Back
                           </Button>
                           <Button type="submit">Create Chatbot</Button>

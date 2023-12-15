@@ -27,10 +27,16 @@ const UserNav = ({ session }: UserNavProps) => {
           <User className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-2 w-56">
-        <DropdownMenuLabel className="truncate">
+      <DropdownMenuContent className="mr-8 w-[17rem]">
+        <DropdownMenuLabel className="pb-0">
           {session?.user?.name}
         </DropdownMenuLabel>
+        <DropdownMenuItem className="pt-0">
+          {session?.user?.email}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuLabel>CREATOR</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         <DropdownMenuLabel>

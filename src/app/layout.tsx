@@ -4,7 +4,7 @@ import { Toaster } from "sonner"
 
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/nav-bar"
 import { SessionProvider } from "@/components/session-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 

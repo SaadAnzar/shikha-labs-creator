@@ -253,7 +253,7 @@ export default function Chatbot({
           <span className="text-primary font-medium">Polymath AI</span>
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pr-2">
         <div
           ref={scrollAreaRef}
           className="h-[450px] w-full space-y-4 overflow-y-auto pr-4"
@@ -361,7 +361,7 @@ export default function Chatbot({
             }
             className="drop-shadow"
           />
-          <Button disabled={isLoading}>
+          <Button disabled={isLoading || !input}>
             {isLoading ? (
               <div className="flex items-center gap-2">
                 <Grid
