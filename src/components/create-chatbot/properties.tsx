@@ -14,7 +14,9 @@ import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -169,8 +171,8 @@ const Properties = ({
       </Card>
 
       <Card className="mx-5">
-        <CardHeader className="pb-4">
-          <CardTitle>Subject</CardTitle>
+        <CardHeader className="space-y-0 pb-4">
+          <CardTitle className="text-xl tracking-normal">Subject</CardTitle>
           <CardDescription className="text-primary/60 text-sm">
             Subject for your chatbot.
           </CardDescription>
@@ -181,24 +183,27 @@ const Properties = ({
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value="English">English</SelectItem>
-              <SelectItem value="Hindi">Hindi</SelectItem>
-              <SelectItem value="Urdu">Urdu</SelectItem>
-              <SelectItem value="Mathematics">Mathematics</SelectItem>
-              <SelectItem value="Science">Science</SelectItem>
-              <SelectItem value="Social Science">Social Science</SelectItem>
-              <SelectItem value="Sanskrit">Sanskrit</SelectItem>
-              <SelectItem value="Physics">Physics</SelectItem>
-              <SelectItem value="Chemistry">Chemistry</SelectItem>
-              <SelectItem value="Biology">Biology</SelectItem>
-              <SelectItem value="EVS">EVS</SelectItem>
+              <SelectGroup>
+                <SelectLabel>Subject</SelectLabel>
+                <SelectItem value="English">English</SelectItem>
+                <SelectItem value="Hindi">Hindi</SelectItem>
+                <SelectItem value="Urdu">Urdu</SelectItem>
+                <SelectItem value="Mathematics">Mathematics</SelectItem>
+                <SelectItem value="Science">Science</SelectItem>
+                <SelectItem value="Social Science">Social Science</SelectItem>
+                <SelectItem value="Sanskrit">Sanskrit</SelectItem>
+                <SelectItem value="Physics">Physics</SelectItem>
+                <SelectItem value="Chemistry">Chemistry</SelectItem>
+                <SelectItem value="Biology">Biology</SelectItem>
+                <SelectItem value="EVS">EVS</SelectItem>
+              </SelectGroup>
             </SelectContent>
           </Select>
         </CardContent>
       </Card>
       <Card className="mx-5">
-        <CardHeader className="pb-4">
-          <CardTitle>Grade</CardTitle>
+        <CardHeader className="space-y-0 pb-4">
+          <CardTitle className="text-xl tracking-normal">Grade</CardTitle>
           <CardDescription className="text-primary/60 text-sm">
             Grade for your chatbot.
           </CardDescription>
@@ -209,16 +214,19 @@ const Properties = ({
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value="Grade 1">Grade 1</SelectItem>
-              <SelectItem value="Grade 2">Grade 2</SelectItem>
-              <SelectItem value="Grade 3">Grade 3</SelectItem>
-              <SelectItem value="Grade 4">Grade 4</SelectItem>
-              <SelectItem value="Grade 5">Grade 5</SelectItem>
-              <SelectItem value="Grade 6">Grade 6</SelectItem>
-              <SelectItem value="Grade 7">Grade 7</SelectItem>
-              <SelectItem value="Grade 8">Grade 8</SelectItem>
-              <SelectItem value="Grade 9">Grade 9</SelectItem>
-              <SelectItem value="Grade 10">Grade 10</SelectItem>
+              <SelectGroup>
+                <SelectLabel>Grade</SelectLabel>
+                <SelectItem value="Grade 1">Grade 1</SelectItem>
+                <SelectItem value="Grade 2">Grade 2</SelectItem>
+                <SelectItem value="Grade 3">Grade 3</SelectItem>
+                <SelectItem value="Grade 4">Grade 4</SelectItem>
+                <SelectItem value="Grade 5">Grade 5</SelectItem>
+                <SelectItem value="Grade 6">Grade 6</SelectItem>
+                <SelectItem value="Grade 7">Grade 7</SelectItem>
+                <SelectItem value="Grade 8">Grade 8</SelectItem>
+                <SelectItem value="Grade 9">Grade 9</SelectItem>
+                <SelectItem value="Grade 10">Grade 10</SelectItem>
+              </SelectGroup>
             </SelectContent>
           </Select>
         </CardContent>

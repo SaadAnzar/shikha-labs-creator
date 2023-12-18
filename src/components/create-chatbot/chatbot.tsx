@@ -30,8 +30,8 @@ interface ChatbotProps {
 }
 
 interface Chat {
-  message: string
-  author: string
+  role: "user" | "assistant"
+  content: string
 }
 
 export default function Chatbot({
@@ -46,7 +46,7 @@ export default function Chatbot({
 }: ChatbotProps) {
   const [input, setInput] = useState<string>("")
   const [chats, setChats] = useState<Chat[]>([
-    { message: welcomeMessage, author: "bot" },
+    { role: "assistant", content: welcomeMessage },
   ])
   const [questions, setQuestions] = useState<string>("")
   const [answer, setAnswer] = useState<string>("")
@@ -66,8 +66,8 @@ export default function Chatbot({
   useEffect(() => {
     setChats([
       {
-        message: welcomeMessage || "Hello, how can I help you today?",
-        author: "bot",
+        role: "assistant",
+        content: welcomeMessage || "Hello, how can I help you today?",
       },
     ])
   }, [welcomeMessage])
@@ -82,9 +82,9 @@ export default function Chatbot({
     } else if (prompt.length < 3) {
       toast.error("Prompt must be at least 3 characters long.")
     } else {
-      const currentChat = {
-        message: input,
-        author: "user",
+      const currentChat: Chat = {
+        role: "user",
+        content: input,
       }
 
       let conversationHistory: Chat[] = []
@@ -106,13 +106,7 @@ export default function Chatbot({
         ]
       }
 
-      const conversationString = conversationHistory
-        .map((chat) => `${chat.message}`)
-        .join("\n\n")
-
-      console.log(conversationString)
-
-      setChats([...chats, { message: input, author: "user" }])
+      setChats([...chats, { role: "user", content: input }])
       setIsLoading(true)
 
       const response = await fetch("/api/conversation", {
@@ -120,7 +114,7 @@ export default function Chatbot({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, input: conversationString }),
+        body: JSON.stringify({ prompt, input: conversationHistory }),
       })
 
       const data = response.body
@@ -132,11 +126,11 @@ export default function Chatbot({
       if (!response.ok) {
         setChats([
           ...chats,
-          { message: input, author: "user" },
+          { role: "user", content: input },
           {
-            message:
+            role: "assistant",
+            content:
               "Sorry, We ran into an error. Please refresh the page and try again.",
-            author: "bot",
           },
         ])
         setInput("")
@@ -157,12 +151,12 @@ export default function Chatbot({
         setChats([
           ...chats,
           {
-            message: input,
-            author: "user",
+            role: "user",
+            content: input,
           },
           {
-            message: output as string,
-            author: "bot",
+            role: "assistant",
+            content: output as string,
           },
         ])
       }
@@ -192,7 +186,7 @@ export default function Chatbot({
     } else {
       const response = handleQuestions()
       setQuestions(response)
-      setChats([...chats, { message: input, author: "user" }])
+      setChats([...chats, { role: "user", content: input }])
       setIsLoading(true)
 
       const res = await fetch(
@@ -207,12 +201,12 @@ export default function Chatbot({
       setChats([
         ...chats,
         {
-          message: input,
-          author: "user",
+          role: "user",
+          content: input,
         },
         {
-          message: Answer,
-          author: "bot",
+          role: "assistant",
+          content: Answer,
         },
       ])
       setInput("")
@@ -229,11 +223,11 @@ export default function Chatbot({
       if (!res.ok) {
         setChats([
           ...chats,
-          { message: input, author: "user" },
+          { role: "user", content: input },
           {
-            message:
+            role: "assistant",
+            content:
               "Sorry, Your document is not in the index. Please upload a new document.",
-            author: "bot",
           },
         ])
         setInput("")
@@ -260,7 +254,7 @@ export default function Chatbot({
         >
           {chats.map((chat, index) => (
             <div key={index} className="my-4 flex flex-1 gap-3 text-sm">
-              {chat.author === "user" && (
+              {chat.role === "user" && (
                 <Avatar>
                   <div className="flex h-full w-full items-center justify-center rounded-full border bg-black">
                     <svg
@@ -277,7 +271,7 @@ export default function Chatbot({
                   </div>
                 </Avatar>
               )}
-              {chat.author === "bot" && !imagePreview && (
+              {chat.role === "assistant" && !imagePreview && (
                 <Avatar>
                   <div
                     className={cn(
@@ -300,7 +294,7 @@ export default function Chatbot({
                   </div>
                 </Avatar>
               )}
-              {chat.author === "bot" && imagePreview && (
+              {chat.role === "assistant" && imagePreview && (
                 <Avatar>
                   <div
                     className={cn(
@@ -321,12 +315,12 @@ export default function Chatbot({
 
               <div className="leading-relaxed">
                 <span className="block text-base font-medium tracking-normal">
-                  {chat.author === "user"
+                  {chat.role === "user"
                     ? "You"
                     : `${name || "Polymath Chatbot"}`}{" "}
                 </span>
                 <div className="bg-accent mt-1 rounded-lg px-4 py-1.5 font-medium">
-                  {chat.message}
+                  {chat.content}
                 </div>
               </div>
             </div>
