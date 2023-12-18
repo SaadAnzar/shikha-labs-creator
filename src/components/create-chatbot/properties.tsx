@@ -11,6 +11,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 
 interface PropertiesProps {
@@ -22,6 +29,10 @@ interface PropertiesProps {
   setWelcomeMessage: React.Dispatch<React.SetStateAction<string>>
   description: string
   setDescription: React.Dispatch<React.SetStateAction<string>>
+  subject: string
+  setSubject: React.Dispatch<React.SetStateAction<string>>
+  grade: string
+  setGrade: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Properties = ({
@@ -33,6 +44,10 @@ const Properties = ({
   setWelcomeMessage,
   description,
   setDescription,
+  subject,
+  setSubject,
+  grade,
+  setGrade,
 }: PropertiesProps) => {
   const handleImageUpload = (event: any) => {
     const selectedImage = event.target.files[0]
@@ -150,6 +165,62 @@ const Properties = ({
             placeholder="Please enter a description for your chatbot."
             className="shadow-sm"
           />
+        </CardContent>
+      </Card>
+
+      <Card className="mx-5">
+        <CardHeader className="pb-4">
+          <CardTitle>Subject</CardTitle>
+          <CardDescription className="text-primary/60 text-sm">
+            Subject for your chatbot.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Select value={subject} onValueChange={(value) => setSubject(value)}>
+            <SelectTrigger id="grade">
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent position="popper">
+              <SelectItem value="English">English</SelectItem>
+              <SelectItem value="Hindi">Hindi</SelectItem>
+              <SelectItem value="Urdu">Urdu</SelectItem>
+              <SelectItem value="Mathematics">Mathematics</SelectItem>
+              <SelectItem value="Science">Science</SelectItem>
+              <SelectItem value="Social Science">Social Science</SelectItem>
+              <SelectItem value="Sanskrit">Sanskrit</SelectItem>
+              <SelectItem value="Physics">Physics</SelectItem>
+              <SelectItem value="Chemistry">Chemistry</SelectItem>
+              <SelectItem value="Biology">Biology</SelectItem>
+              <SelectItem value="EVS">EVS</SelectItem>
+            </SelectContent>
+          </Select>
+        </CardContent>
+      </Card>
+      <Card className="mx-5">
+        <CardHeader className="pb-4">
+          <CardTitle>Grade</CardTitle>
+          <CardDescription className="text-primary/60 text-sm">
+            Grade for your chatbot.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Select value={grade} onValueChange={(value) => setGrade(value)}>
+            <SelectTrigger id="grade">
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent position="popper">
+              <SelectItem value="Grade 1">Grade 1</SelectItem>
+              <SelectItem value="Grade 2">Grade 2</SelectItem>
+              <SelectItem value="Grade 3">Grade 3</SelectItem>
+              <SelectItem value="Grade 4">Grade 4</SelectItem>
+              <SelectItem value="Grade 5">Grade 5</SelectItem>
+              <SelectItem value="Grade 6">Grade 6</SelectItem>
+              <SelectItem value="Grade 7">Grade 7</SelectItem>
+              <SelectItem value="Grade 8">Grade 8</SelectItem>
+              <SelectItem value="Grade 9">Grade 9</SelectItem>
+              <SelectItem value="Grade 10">Grade 10</SelectItem>
+            </SelectContent>
+          </Select>
         </CardContent>
       </Card>
     </div>

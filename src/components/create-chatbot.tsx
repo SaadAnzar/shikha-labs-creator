@@ -122,7 +122,7 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
       <div className="flex items-center gap-5 space-y-0.5">
         <ChatbotStepsBox activeTab={activeTab} />
       </div>
-      <div className="grid grid-flow-col-dense grid-cols-7 space-y-8 lg:space-x-4 lg:space-y-0">
+      <div className="grid grid-flow-col-dense grid-cols-7 space-y-8 pb-2 lg:space-x-4 lg:space-y-0">
         <div className="col-span-4">
           <div className="grid grid-flow-row grid-cols-4 gap-3">
             <div className="bg-secondary/50 col-span-4 rounded-lg">
@@ -138,6 +138,10 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
                       setWelcomeMessage={setWelcomeMessage}
                       description={description}
                       setDescription={setDescription}
+                      subject={subject}
+                      setSubject={setSubject}
+                      grade={grade}
+                      setGrade={setGrade}
                     />
                     <div className="my-3 flex justify-center">
                       <Button onClick={handleButtonClick}>Next</Button>
@@ -180,10 +184,6 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
                       prompt={prompt}
                       setPrompt={setPrompt}
                       indexName={indexName}
-                      subject={subject}
-                      setSubject={setSubject}
-                      grade={grade}
-                      setGrade={setGrade}
                     />
                     <div className="my-5 flex justify-center">
                       {!loading ? (
