@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import MarkdownComponent from "@/components/markdown-component"
 
 interface ChatbotProps {
   imagePreview: string
@@ -320,7 +321,7 @@ export default function Chatbot({
                     : `${name || "Polymath Chatbot"}`}{" "}
                 </span>
                 <div className="bg-accent mt-1 rounded-lg px-4 py-1.5 font-medium">
-                  {chat.content}
+                  <MarkdownComponent content={chat.content} />
                 </div>
               </div>
             </div>
