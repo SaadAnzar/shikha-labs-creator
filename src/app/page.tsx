@@ -23,8 +23,8 @@ export default async function IndexPage() {
             </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
               {session ? (
-                <Link href="/create-chatbot" className={buttonVariants()}>
-                  Create chatbot
+                <Link href="/dashboard" className={buttonVariants()}>
+                  Let&apos;s continue
                 </Link>
               ) : (
                 <SignInButton />

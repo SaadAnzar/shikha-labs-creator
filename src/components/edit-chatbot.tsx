@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore"
 import { Loader2 } from "lucide-react"
 import { Session } from "next-auth"
+import { useDocumentData } from "react-firebase-hooks/firestore"
 import { toast } from "sonner"
 
 import { db } from "@/config/firebase"
@@ -16,13 +17,32 @@ import Properties from "@/components/create-chatbot/properties"
 import { ChatbotStepsBox } from "@/components/create-chatbot/steps"
 import Loader from "@/components/loader"
 
-interface CreateChatbotProps {
+interface EditChatbotProps {
   session: Session
+  chatbotid: string
 }
 
-export default function CreateChatbot({ session }: CreateChatbotProps) {
+export default function EditChatbot({ session, chatbotid }: EditChatbotProps) {
+  const router = useRouter()
+
+  const [chatbotDetails] = useDocumentData(doc(db, "chatbots", chatbotid))
+
+  const dimageURL = chatbotDetails?.imageURL as string
+  const dchatbotName = chatbotDetails?.chatbotName as string
+  const dwelcomeMessage = chatbotDetails?.welcomeMessage as string
+  const ddescription = chatbotDetails?.description as string
+  const dsubject = chatbotDetails?.subject as string
+  const dgrade = chatbotDetails?.grade as string
+  const drubric = chatbotDetails?.rubric as string
+  const dnamespace = chatbotDetails?.namespace as string
+  const dindexName = chatbotDetails?.indexName as string
+  const dtags = chatbotDetails?.tags as string
+  const dprompt = chatbotDetails?.prompt as string
+
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [activeTab, setActiveTab] = useState<string>("properties")
   const [loading, setLoading] = useState<boolean>(false)
+
   const [imagePreview, setImagePreview] = useState<string>("")
   const [name, setName] = useState<string>("")
   const [welcomeMessage, setWelcomeMessage] = useState<string>("")
@@ -34,9 +54,32 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
   const [subject, setSubject] = useState<string>("")
   const [grade, setGrade] = useState<string>("")
   const [rubric, setRubric] = useState<string>("")
-  const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const router = useRouter()
+  useEffect(() => {
+    if (dimageURL) setImagePreview(dimageURL)
+    if (dchatbotName) setName(dchatbotName)
+    if (dwelcomeMessage) setWelcomeMessage(dwelcomeMessage)
+    if (ddescription) setWelcomeMessage(ddescription)
+    if (dsubject) setSubject(dsubject)
+    if (dgrade) setGrade(dgrade)
+    if (drubric) setRubric(drubric)
+    if (dnamespace) setNamespace(dnamespace)
+    if (dindexName) setIndexName(dindexName)
+    if (dtags) setTags(dtags)
+    if (dprompt) setPrompt(dprompt)
+  }, [
+    dimageURL,
+    dchatbotName,
+    dwelcomeMessage,
+    ddescription,
+    dsubject,
+    dgrade,
+    drubric,
+    dnamespace,
+    dindexName,
+    dtags,
+    dprompt,
+  ])
 
   useEffect(() => {
     setTimeout(() => {
@@ -61,7 +104,7 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
     }
   }
 
-  const createChatbot = async (e: React.FormEvent<HTMLFormElement>) => {
+  const editChatbot = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!name) {
@@ -79,13 +122,15 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
     } else if (!prompt && !namespace) {
       console.log(prompt, namespace)
       toast.error(
-        "Either uploaded document or prompt is required to create a chatbot."
+        "Either uploaded document or prompt is required to edit a chatbot."
       )
     } else
       try {
         setLoading(true)
 
-        await addDoc(collection(db, "chatbots"), {
+        const docRef = doc(db, "chatbots", chatbotid)
+
+        await updateDoc(docRef, {
           chatbotName: name,
           imageURL: imagePreview,
           welcomeMessage: welcomeMessage,
@@ -97,23 +142,11 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
           subject: subject,
           grade: grade,
           rubric: rubric,
-          creator: session?.user?.email!,
-          createdAt: serverTimestamp(),
+          updatedBy: session?.user?.email!,
+          updatedAt: serverTimestamp(),
         })
         setLoading(false)
-        toast.success("Your chatbot has been created.")
-        // setName("")
-        // setImagePreview("")
-        // setWelcomeMessage("")
-        // setDescription("")
-        // setNamespace("")
-        // setIndexName("")
-        // setTags("")
-        // setPrompt("")
-        // setSubject("")
-        // setGrade("")
-        // setActiveTab("properties")
-        // window.scrollTo(0, 0)
+        toast.success("Your chatbot has been edited.")
         router.push("/dashboard")
       } catch (error) {
         console.log(error)
@@ -132,7 +165,7 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
         <div className="col-span-4">
           <div className="grid grid-flow-row grid-cols-4 gap-3">
             <div className="bg-secondary/50 col-span-4 rounded-lg">
-              <form onSubmit={createChatbot}>
+              <form onSubmit={editChatbot}>
                 {activeTab === "properties" && (
                   <div>
                     <Properties
@@ -204,12 +237,12 @@ export default function CreateChatbot({ session }: CreateChatbotProps) {
                           >
                             Back
                           </Button>
-                          <Button type="submit">Create Chatbot</Button>
+                          <Button type="submit">Edit Chatbot</Button>
                         </div>
                       ) : (
                         <Button disabled>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Creating Chatbot...
+                          Editing Chatbot...
                         </Button>
                       )}
                     </div>

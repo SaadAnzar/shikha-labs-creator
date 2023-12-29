@@ -35,6 +35,8 @@ interface PropertiesProps {
   setSubject: React.Dispatch<React.SetStateAction<string>>
   grade: string
   setGrade: React.Dispatch<React.SetStateAction<string>>
+  rubric: string
+  setRubric: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Properties = ({
@@ -50,6 +52,8 @@ const Properties = ({
   setSubject,
   grade,
   setGrade,
+  rubric,
+  setRubric,
 }: PropertiesProps) => {
   const handleImageUpload = (event: any) => {
     const selectedImage = event.target.files[0]
@@ -229,6 +233,28 @@ const Properties = ({
               </SelectGroup>
             </SelectContent>
           </Select>
+        </CardContent>
+      </Card>
+
+      <Card className="mx-5">
+        <CardHeader className="space-y-0 pb-4">
+          <CardTitle className="text-xl tracking-normal">
+            Rating Rubric
+            <span className="text-primary/40 ml-3 text-sm font-medium">
+              (Optional)
+            </span>
+          </CardTitle>
+          <CardDescription className="text-primary/60 text-sm">
+            Student rating rubric for your chatbot.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Textarea
+            value={rubric}
+            onChange={(e) => setRubric(e.target.value)}
+            placeholder="Please enter a rating rubric for your chatbot."
+            className="shadow-sm"
+          />
         </CardContent>
       </Card>
     </div>
