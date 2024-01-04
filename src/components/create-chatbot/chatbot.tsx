@@ -249,7 +249,7 @@ export default function Chatbot({
   return (
     <Card className="h-[79vh] shadow-md">
       <CardHeader className="p-4">
-        <CardTitle className="tracking-normal text-lg">
+        <CardTitle className="text-lg tracking-normal">
           {name || "Shikha Chatbot"}
         </CardTitle>
         <CardDescription className="leading-3">
