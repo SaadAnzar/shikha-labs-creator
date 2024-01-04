@@ -260,7 +260,7 @@ export default function Chatbot({
       <CardContent className="pr-2">
         <div
           ref={scrollAreaRef}
-          className="h-[450px] w-full space-y-4 overflow-y-auto pr-4"
+          className="h-[66vh] w-full space-y-4 overflow-y-auto pr-4"
         >
           {chats.map((chat, index) => (
             <div key={index} className="my-4 flex flex-1 gap-3 text-sm">
@@ -349,7 +349,7 @@ export default function Chatbot({
           )}
         </div>
       </CardContent>
-      <CardFooter className="p-1">
+      <CardFooter className="p-1 pt-2">
         <form
           onSubmit={indexName ? handleDataSubmit : handlePromptSubmit}
           className="flex w-full items-center justify-center space-x-2"
