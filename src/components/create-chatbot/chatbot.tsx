@@ -237,10 +237,19 @@ export default function Chatbot({
     }
   }
 
+  const handleClear = () => {
+    setChats([
+      {
+        role: "assistant",
+        content: welcomeMessage || "Hello, how can I help you today?",
+      },
+    ])
+  }
+
   return (
     <Card className="h-[79vh] shadow-md">
-      <CardHeader>
-        <CardTitle className="tracking-normal">
+      <CardHeader className="p-4">
+        <CardTitle className="tracking-normal text-lg">
           {name || "Shikha Chatbot"}
         </CardTitle>
         <CardDescription className="leading-3">
@@ -374,6 +383,15 @@ export default function Chatbot({
             )}
           </Button>
         </form>
+        <Button
+          variant="outline"
+          size="sm"
+          className="ml-1.5 px-2"
+          onClick={handleClear}
+          disabled={chats.length < 2}
+        >
+          Clear
+        </Button>
       </CardFooter>
     </Card>
   )
